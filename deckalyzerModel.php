@@ -2,13 +2,13 @@
 	/**
 	 *
 	 */
-	class Model{
+	class deckalyzerModel{
 		private $error = '';
 		private $mysqli;
 		private $user;
 
-		function __construct(argument){
-			this->connectToDB();
+		public function __construct(){
+			$this->connectToDB();
 		}
 
 		public function __destruct(){
@@ -76,8 +76,37 @@
 			$this->error = '';
 		}
 
-		public function deleteCard(){
+		public function deleteCard($id)
+		{
 			$this->error = '';
+			
+			if (!$this->user)
+			{
+				$this->error = "User not specified. Unable to delete card.";
+				return $this->error;
+			}
+			
+			if(!$this->mysqli)
+			{
+				$this->error = "No connection to database. Unable to delete card.";
+				return $this->error;
+			}
+			
+			if(!$id)
+			{
+				$this->error = "No id specified for card to delete.";
+				return $this->error;			
+			}			
+		
+			$idEscaped = $this->mysqli->real_escape_string($id);
+			$userIDEscaped = $this->mysqli->real_escape_string($this->user->userID);
+			$sql = "DELETE FROM cards WHERE ownerID = $userIDEscaped AND id = $idEscaped";
+			if (!$result = $this->mysqli->query($sql))
+			{
+				$this->error = $this->mysqli->error;
+			}
+			
+			return $this->error;
 		}
 	}
 
