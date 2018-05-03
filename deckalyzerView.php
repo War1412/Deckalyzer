@@ -1,7 +1,8 @@
 <?php
 	
 	
-		class deckViews{
+		class deckViews
+		{
 			private $stylesheet = 'deckalyzer.css';
 			private $pageTitle = 'Cards';
 			
