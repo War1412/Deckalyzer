@@ -2,41 +2,51 @@
 	/**
 	 *
 	 */
-	class Model{
+	class Model
+	{
 		private $error = '';
 		private $mysqli;
 		private $user;
 
-		function __construct(argument){
+		function __construct(argument)
+		{
 			this->connectToDB();
 		}
 
-		public function __destruct(){
-			if ($this->mysqli){
+		public function __destruct()
+		{
+			if ($this->mysqli)
+			{
 				$this->mysqli->close();
 			}
 		}
 
-		private function connectToDB(){
+		private function connectToDB()
+		{
 			require('DBCredentials.php');
 			$this->mysqli = new mysqli($servername, $username, $password, $dbname);
-			if ($this->mysqli->connect_error) {
+			if ($this->mysqli->connect_error)
+			{
 				$this->error = $mysqli->connect_error;
 			}
 		}
 
-		public function getUser() {
+		public function getUser()
+		{
 			return $this->user;
 		}
 
-		public function login($loginID, $password){
+		public function login($loginID, $password)
+		{
 
 		}
 
-		public function addCard($data){
+		public function addCard($data)
+		{
 			$this->error = '';
 
-			if(!$this->user){
+			if(!$this->user)
+			{
 				$this->error = "No user specified. Could not add card";
 				return $this->error;
 			}
@@ -45,7 +55,8 @@
 			// $quantity = $data['$quantity'];
 			// $forTrade = $data['forTrade'];
 
-			if(!$name){
+			if(!$name)
+			{
 				$this->error = "No card name specified. Could not add card";
 				return $this->error;
 			}
@@ -57,26 +68,31 @@
 
 			$sql = "INSERT INTO cards (name, ownerId) VALUES ('$nameEscaped', '$userIDEscaped')";
 
-			if(!$result = $this->mysqli->query($sql)){
+			if(!$result = $this->mysqli->query($sql))
+			{
 				$this->error = $this->mysqli->error;
 			}
 
 			return $this->error;
 		}
 
-		public function getCard(){
+		public function getCard()
+		{
 			$this->error = '';
 		}
 
-		public function getCardCollection(){
+		public function getCardCollection()
+		{
 			$this->error = '';
 		}
 
-		public function editCard(){
+		public function editCard()
+		{
 			$this->error = '';
 		}
 
-		public function deleteCard(){
+		public function deleteCard()
+		{
 			$this->error = '';
 		}
 	}
